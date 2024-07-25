@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+    <content>
+        <h1>Языки программирования</h1>
+        {% if langList %}
+            {% for i in langList %}
+                <h3> {{ i.name }} </h3>
+                <h5> {{ i.version }} </h5>
+                <p> {{ i.description }} </p>
+                <p><a href="{% url 'langDetail' i.id %}">
+                    <button>Подробнее ...</button>
+                </a></p>
+            {% endfor %}
+        {% else %}
+            <p>Курсы отсутствуют</p>
+        {% endif %}
+    </content>
+{% endblock %}

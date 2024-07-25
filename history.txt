@@ -1,0 +1,122 @@
+py -V - Проверка версии Python (python --version)
+import sys; print(sys.version) - Проверка версии Python из кода
+python.exe -m pip install --upgrade pip - обновление pip
+
+Get-ExecutionPolicy - проверка разрешений запуска скриптов (Restricted)
+Set-ExecutionPolicy AllSigned - разрешает запуск скриптов
+
+python -m venv venv - Создаем локальную среду (-m - ключ для активации venv)
+.\venv\Scripts\activate - Активируем локальную среду (появиться зеленый (venv))
+deactivate - если надо декативировать
+
+py -m pip freeze - для списка модулей (list - все модули, freeze - только установленные)
+pip list - Просмотреть установленные модули
+pip freeze > requirements.txt - Сохраняем список модулей
+pip install -r requirements.txt - Загружаем список модулей
+
+py -m pip install Django - Установка Django
+django-admin startproject ITJT . - Создает проект (. - чтоб избавиться от перевложения)
+ITJT:
+    manage.py - Файл для запуска команд Django
+    \ITJT\settings.py:
+        DEBUG = True - При выгрузке заменить на False
+        ALLOWED_HOSTS = [] - Список доступных хостов ('https://itjt.ru')
+        DATABASES = ... - путь к базе данных
+    \ITJT\urls.py:
+        urlpatterns =  ... - роутинг урлов
+
+cd itjt - смена рабочей папки (если точка входа в перевложена в подпапку)
+python manage.py runserver - запуск сервера Django
+Ctrl+C - остановка сервера
+
+python manage.py startapp main - создание категорий
+- категории регистрируются в INSTALLED_APPS = []
+- в папке категории создаются свои urls.py (path('', view.index), и другие)
+- для выдачи ссылок создаются views.py с функциями (def index(): и другие)
+  (вместо функций лучше использовать классы и шаблоны тоже в setting)
+- templates - папка для шаблонов в main с одноименной подпапкой и index.html
+
+static - папка для статических файлов с подпапками css, js, img и т.д.
+{% load static %} - прописывается в начале шаблона
+STATICFILES_DIRS = [BASE_DIR / "static"] - добавить в settings.py
+в глобальный urls.py добавить:
+    from django.conf import settings
+    from django.conf.urls.static import static
+    urlpatterns = [ ...
+    ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+LANGUAGE_CODE = 'en-us' - меняем на русский 'ru'
+
+class Course(models.Model): - в файле models под каждую таблицу БД.
+    def __str__(self): - нужна такая функция с return self.name к примеру
+    class Meta: - и такой подкласс в классе для названия в админке
+        verbose_name = 'Курс' - в единственном числе
+        verbose_name_plural = 'Курсы' - во множественном числе
+
+python manage.py makemigrations - создаем файл миграции
+python manage.py migrate - запуск миграции (в первый раз подгрузятся системные)
+http://127.0.0.1:8000/admin - путь к админке
+python manage.py createsuperuser - учетка админа (admin, '', admin, admin. y)
+Для добавления своих таблиц в админку, добавляем в файл admin.py:
+    from .models import Course
+    admin.site.register(Course)
+
+Для вывода таблиц БД на страницу, добавляем в файл view.py:
+    from .models import Course
+Добавляем объекты в функцию def course(request):
+    courses = Course.objects.all() или:
+    courses = Course.objects.order_by('-date')[:5] - (вывод с обр. сортировкой по дате, до 5)
+    return render(request, 'course/course.html', { 'courses': courses})
+Вставляем в course.html: {{ courses }} или:
+    {% for i in courses %}
+        <p> {{ i.name }} </p>
+    {% endfor %}
+
+Ввод данных из form.py см. urls, view, create
+
+Для динамического вывода, добавляем в файл view.py:
+    from django.views.generic import DetailView
+    class CourseDetailView(DetailView): и т.д. см. в view
+Для уров добавляем в файл urls.py: (счетчик и уже не функция, а класс)
+    path('<int:pk>', views.CourseDetailView.as_view(), name='detail'),
+И добавляем шаблон для вывода detailView.html (проверить http://127.0.0.1:8000/course/1)
+В файле course.html добавляем авто-ссылки: <a href="{% url 'detail' i.id %}">
+
+Для редактирования добавляем в файл urls.py: (редактирование файла по id)
+    path('<int:pk>/update', views.CourseUpdateView.as_view(), name='update'),
+    path('<int:pk>/delete', views.CourseDeleteView.as_view(), name='delete')
+    в view.py добавляем class CourseUpdateView(UpdateView):
+    и class CourseDeleteView(DeleteView): - см. файл (+ success_url = '/course/'),
+    и from django.views.generic import DetailView, UpdateView, DeleteView
+    И кнопки в detailView.html: <a href="{% url 'update' course.id %}">Редактировать</a>
+    и <a href="{% url 'delete' course.id %}">Удалить</a>
+
+Поля моделей (типы данных): (https://metanit.com/python/django/5.2.php)
+BinaryField(): хранит бинарные данные
+BooleanField(): хранит значение True или False (0 или 1)
+NullBooleanField(): хранит значение True или False или Null
+DateField(): хранит дату
+TimeField(): хранит время
+DateTimeField(): хранит дату и время
+DurationField(): хранит период времени
+AutoField(): хранит целочисленное значение, которое автоматически инкрементируется, обычно применяется для первичных ключей
+BigAutoField(): хранит 64-битное целочисленное значение, но в отличие от AutoField гарантирует, что число входит в диапазон от 1 до 9223372036854775807.
+SmallAutoField(): хранит 16-битное целочисленное значение в диапазоне от 1 до 32767
+BigIntegerField(): представляет число - значение типа Number, которое укладывается в диапазон от -9223372036854775808 до 9223372036854775807. В зависимости от выбранной СУБД диапазон может немного отличаться
+DecimalField(decimal_places=X, max_digits=Y): представляет значение типа Number, которое имеет максимум X разрядов и Y знаков после запятой
+FloatField(): хранит, значение типа Number, которое представляет число с плавающей точкой
+IntegerField(): хранит значение типа Number, которое представляет целочисленное значение
+PositiveIntegerField(): хранит значение типа Number, которое представляет положительное целочисленное значение (от 0 до 2147483647)
+PositiveBigIntegerField(): хранит значение типа Number, которое представляет положительное 64-битное целочисленное значение (от 0 до 9223372036854775807)
+PositiveSmallIntegerField(): хранит значение типа Number, которое представляет небольшое положительное целочисленное значение (от 0 до 32767)
+SmallIntegerField(): хранит значение типа Number, которое представляет небольшое целочисленное значение (от -32768 до 32767)
+CharField(max_length=N): хранит строку длиной не более N символов
+TextField(): хранит строку неопределенной длины
+EmailField(): хранит строку, которая представляет email-адрес. Значение автоматически валидируется встроенным валидатором EmailValidator
+FileField(): хранит строку, которая представляет имя файла
+FilePathField(): хранит строку, которая представляет путь к файлу длиной в 100 символов
+ImageField(): хранит строку, которая представляет данные об изображении
+GenericIPAddressField(): хранит строку, которая представляет IP-адрес в формате IP4v или IP6v
+SlugField(): хранит строку, которая может содержать только буквы в нижнем регистре, цифры, дефис и знак подчеркивания
+URLField(): хранит строку, которая представляет валидный URL-адрес
+UUIDField(): хранит строку, которая представляет UUID-идетификатор
+JSONField(): хранит данные в формате JSON, которая представляет UUID-идетификатор

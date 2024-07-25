@@ -1,0 +1,33 @@
+.test {
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    border: solid 1px red;
+    padding: 10px;
+    font-size: 2em;
+}
+
+.test1 {
+    background: var(--b1) ;
+    color: var(--f1);
+}
+
+.test2 {
+    background: var(--b2);
+    color: var(--f2);
+}
+
+.test3 {
+    background: var(--b3);
+    color: var(--f3);
+}
+
+.test4 {
+    background: var(--b4);
+    color: var(--f4);
+}
+
+.test5 {
+    background: var(--b5);
+    color: var(--f5);
+}

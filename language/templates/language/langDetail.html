@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %}
+    {{ language.name }}
+{% endblock %}
+
+{% block content %}
+    <content>
+        <h1>Язык программирования: {{ language.name }}</h1>
+        <p>Версия: {{ language.version }} </p><br>
+        <img src="{% static 'img/python.jfif' %}" alt="">
+        <p>Рейтинг TIOBE: {{ language.tiobe }} </p>
+        <p>Типизация: {{ language.typing }} </p>
+        <p>Трансляция: {{ language.translation }} </p>
+        <p>Популярные программы: {{ language.product }} </p>
+        <p>Фреймворки и т.д.: {{ language.usage }} </p>
+        <p>Инструментарий: {{ language.editor }} </p>
+        <p>Описание: {{ language.description }} </p>
+        <p>Область применения: {{ language.trend }} </p>
+        <p>Пример кода: {{ language.example }} </p>
+        <hr>
+        <div><a href="{% url 'langUpdate' language.id %}">Редактировать язык (ВРЕМЕННО)</a></div>
+        <div><a href="{% url 'langDelete' language.id %}">Удалить язык (ВРЕМЕННО)</a></div>
+    </content>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+    <content>
+        <h1>Курсы</h1>
+        {% if courseList %}
+            {% for i in courseList %}
+                <h3> {{ i.name }} </h3>
+                <h5> {{ i.language }} </h5>
+                <p> {{ i.description }} </p>
+                <p><a href="{% url 'courseDetail' i.id %}">
+                    <button>Подробнее ...</button>
+                </a></p>
+            {% endfor %}
+        {% else %}
+            <p>Курсы отсутствуют</p>
+        {% endif %}
+    </content>
+{% endblock %}

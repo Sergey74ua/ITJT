@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+    <content>
+        <h1>Добавление курса</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.name }} {{ form.version }} {{ form.passed }} <br><br>
+            {{ form.language }} {{ form.lessons }} {{ form.date }} <br><br>
+            {{ form.price }} {{ form.favorites }} {{ form.purchased }} <br><br>
+            {{ form.description }} <br><br>
+            {{ form.recommended }} <br><br>
+            {{ form.tasks }} <br>
+            <button type="submit">Добавить курс</button><br>
+            <span>{{ error }}</span> <br>
+        </form><br><br>
+    </content>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    {{ course.name }}
+{% endblock %}
+
+{% block content %}
+<content>
+    <h1>Обучающий курс: {{ course.name }}</h1>
+    <p>Язык: {{ course.language }} </p>
+    <p>Версия: {{ course.version }} </p>
+    <p>Цена: {{ course.price }} </p>
+    <p>Описание: {{ course.description }} </p>
+    <p>Рекомендовано: {{ course.recommended }} </p>
+    <p>Создан: {{ course.date }} </p>
+    <p>Количество уроков: {{ course.lessons }} </p>
+    <p>Задания (формат данных уточняется): {{ course.tasks }} </p>
+    <p>Добавлено в избранное: {{ course.favorites }} </p>
+    <p>Количество покупок: {{ course.purchased }} </p>
+    <p>Выдано сертификатов: {{ course.passed }} </p>
+    <hr>
+    <div><a href="{% url 'langUpdate' course.id %}">Редактировать курс (ВРЕМЕННО)</a></div>
+    <div><a href="{% url 'langDelete' course.id %}">Удалить курс (ВРЕМЕННО)</a></div>
+</content>
+{% endblock %}

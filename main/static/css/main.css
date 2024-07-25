@@ -1,0 +1,107 @@
+@import url("testColor.css");
+
+/******** COLOR ********/
+:root {
+    /* back color */
+    --b1: #2D0145;
+    --b2: #370452;
+    --b3: #470247;
+    --b4: #5D295D;
+    --b5: #6B1799;
+    /* front color */
+    --f1: #B05FDC;
+    --f2: #C190DC;
+    --f3: #E564E5;
+    --f4: #E5A2E5;
+    --f5: #fcd2fc;
+}
+
+body {
+    background-color: var(--b3);
+    color: var(--f3);
+}
+
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: min-content;
+    text-align: center;
+    background-color: var(--b1);
+    color: var(--f1);
+    border-bottom: solid 1px var(--f1);
+}
+
+footer {
+    position: fixed;
+    width: 100%;
+    height: min-content;
+    bottom: 0;
+    text-align: center;
+    background-color: var(--b1);
+    color: var(--f1);
+}
+
+main {
+	display: flex;
+	overflow: auto;
+	width: 80%;
+    height: 100%;
+    margin: 120px auto;
+}
+
+menu {
+	flex: 1;
+    margin: 10px;
+    padding: 10px;
+    background-color: var(--b2);
+    color: var(--f2);
+    border: solid 1px var(--f1);
+}
+
+content {
+	flex: 4;
+    margin: 10px;
+    padding: 10px;
+    background-color: var(--b2);
+    color: var(--f2);
+    border: solid 1px var(--f1);
+}
+
+aside {
+	flex: 1;
+    margin: 10px;
+    padding: 10px;
+    background-color: var(--b2);
+    color: var(--f2);
+    border: solid 1px var(--f1);
+}
+
+section {
+    margin: 10px;
+    padding: 10px;
+    background-color: var(--b5);
+    color: var(--f5);
+    border: 1px solid var(--f5);
+    border-radius: 10px;
+}
+
+div {
+    display: inline-block;
+}
+
+a:link {
+    color: var(--f1);
+}
+
+a:visited {
+    color: var(--f2);
+}
+
+a:hover {
+    color: var(--f3);
+}
+
+a:active {
+    color: var(--f4);
+}

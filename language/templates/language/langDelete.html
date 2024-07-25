@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+    <content>
+        <h1>Удаление языка программирования</h1>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit">Удалить курс</button><br>
+        </form><br><br>
+    </content>
+{% endblock %}

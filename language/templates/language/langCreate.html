@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+    <content>
+        <h1>Добавление языка</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.name }} {{ form.version }} {{ form.icon }} <br><br>
+            {{ form.tiobe }} {{ form.typing }} {{ form.translation }} <br><br>
+            {{ form.product }} {{ form.usage }} {{ form.editor }} <br><br>
+            {{ form.description }} <br><br>
+            {{ form.trend }} <br><br>
+            {{ form.example }} <br>
+            <button type="submit">Добавить язык</button><br>
+            <span>{{ error }}</span> <br>
+        </form><br><br>
+    </content>
+{% endblock %}
