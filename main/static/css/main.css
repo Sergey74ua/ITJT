@@ -14,6 +14,14 @@
     --f3: #E564E5;
     --f4: #E5A2E5;
     --f5: #fcd2fc;
+    /*НА ОСНОВЕ МАКЕТА*/
+    --fon: #0D0C0F;
+    --grad: #545356;
+    --block: #1E1E1E;
+    --border: #2F2F2F;
+    --font1: #FEFEFE;
+    --font2: #C6C6C6;
+    --font3: #4E4E4E;
 }
 
 body {
